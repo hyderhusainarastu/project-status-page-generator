@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nimbus Notes — Project status</title>
+  <style>
+    :root { --ink:#25211d; --muted:#675f56; --paper:#fcfaf5; --panel:#fffdf9; --line:#ded7cc; --accent:#7c3f20; --complete:#2f6b4d; --progress:#9a5a19; --planned:#676a78; --blocked:#a23d34; }
+    @media (prefers-color-scheme: dark) { :root { --ink:#ece6da; --muted:#b4aa9a; --paper:#1c1815; --panel:#242019; --line:#3c352b; --accent:#e0a06a; --complete:#7fcaa0; --progress:#e0b060; --planned:#a8a8b4; --blocked:#e08a80; } }
+    * { box-sizing:border-box; } body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.5 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { max-width:72rem; margin:auto; padding:clamp(1.25rem,4vw,4rem) clamp(1rem,4vw,2rem) 4rem; overflow-x:hidden; } h1,h2,h3,h4,p { margin-top:0; } h1 { font:700 clamp(2.2rem,6vw,4.8rem)/1.02 Georgia,serif; letter-spacing:-.04em; max-width:14ch; } h2 { font:700 clamp(1.55rem,3vw,2.35rem)/1.1 Georgia,serif; letter-spacing:-.025em; } h3 { font:700 1.22rem/1.2 Georgia,serif; } h4 { margin:0; font-size:1rem; } a { color:var(--accent); } code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.88em; word-break:break-word; }
+    header { border-bottom:1px solid var(--line); padding-bottom:2rem; } .eyebrow { margin-bottom:.4rem; color:var(--accent); font-size:.78rem; font-weight:750; letter-spacing:.1em; text-transform:uppercase; } .lede { max-width:61ch; color:var(--muted); font-size:1.1rem; }
+    section { margin-top:3.5rem; } .overview { display:grid; grid-template-columns:minmax(0,2fr) minmax(13rem,1fr); gap:1.5rem; align-items:stretch; } .card,.metric,.phase { border:1px solid var(--line); background:var(--panel); border-radius:.75rem; box-shadow:0 .3rem 1.2rem rgba(69,50,27,.045); } .card { padding:1.4rem; } .metric { display:grid; place-content:center; padding:1.4rem; text-align:center; } .metric strong { font:700 2.45rem/1 Georgia,serif; } .metric span { color:var(--muted); margin-top:.5rem; }
+    .counts { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.7rem; margin-top:1.3rem; } .count { padding:.75rem; border:1px solid var(--line); border-radius:.5rem; } .count strong,.count span { display:block; } .count strong { font-size:1.35rem; } .count span { color:var(--muted); font-size:.8rem; }
+    .phases { list-style:none; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin:0; padding:0; } .phase { padding:1.2rem; } .phase-heading,.item>div { display:flex; gap:.75rem; justify-content:space-between; align-items:flex-start; } .phase h3 { margin-bottom:.55rem; } .phase .eyebrow { margin:.1rem 0 .25rem; } .phase>p:not(.eyebrow) { color:var(--muted); } .meta,.confirmation { color:var(--muted); font-size:.88rem; } .confirmation strong { color:var(--ink); }
+    .status { display:inline-flex; flex:none; align-items:center; border-radius:999px; padding:.18rem .55rem; font-size:.72rem; font-weight:750; line-height:1.2; white-space:nowrap; } .status.complete { background:#e5f2e9; color:var(--complete); } .status.in_progress { background:#fff0d9; color:var(--progress); } .status.blocked { background:#f9e4e1; color:var(--blocked); } .status.planned { background:#ececf0; color:var(--planned); }
+    @media (prefers-color-scheme: dark) { .status.complete { background:#193024; } .status.in_progress { background:#332208; } .status.blocked { background:#331e1c; } .status.planned { background:#28262c; } }
+    ul { padding-left:1.2rem; } li+li { margin-top:.4rem; } .phase ul { color:var(--muted); font-size:.88rem; } .items { list-style:none; margin:1rem 0 0; padding:0; border-top:1px solid var(--line); } .item { padding:1rem 0 0; } .item+li { margin-top:0; border-top:1px solid var(--line); } .item h4 { margin:.15rem 0 .35rem; } .item p { margin:.5rem 0 0; color:var(--muted); font-size:.9rem; } .item-id { color:var(--accent); font-size:.78rem; font-weight:750; }
+    footer { margin-top:4rem; border-top:1px solid var(--line); padding-top:1rem; color:var(--muted); font-size:.88rem; }
+    @media (max-width:44rem) { .overview,.phases { grid-template-columns:1fr; } .counts { grid-template-columns:repeat(2,minmax(0,1fr)); } } @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Nimbus Notes · Generated project status</p>
+      <h1>Progress, evidence, and the next gate.</h1>
+      <p class="lede">This standalone page is generated from <code>examples/status.json</code>.</p>
+    </header>
+    <section class="overview" aria-labelledby="current-title">
+      <div class="card">
+        <p class="eyebrow">Current position</p>
+        <h2 id="current-title">Sync engine in progress</h2>
+        <p>Offline editing works locally; the conflict-resolution pass for multi-device sync is the current focus.</p>
+        <p><strong>Next action:</strong> Land last-write-wins merge for plain-text notes, then design the richer merge strategy for checklists.</p>
+        <div class="counts" aria-label="Phase totals">
+          <div class="count"><strong>2</strong><span>complete</span></div>
+          <div class="count"><strong>1</strong><span>in progress</span></div>
+          <div class="count"><strong>0</strong><span>blocked</span></div>
+          <div class="count"><strong>1</strong><span>planned</span></div>
+        </div>
+      </div>
+      <div class="metric"><strong>1 / 3</strong><span>current-phase items complete</span></div>
+    </section>
+    <section aria-labelledby="roadmap-title">
+      <p class="eyebrow">Roadmap</p><h2 id="roadmap-title">Phases 0–3</h2>
+      <ol class="phases"><li class="phase complete"><div class="phase-heading"><div><p class="eyebrow">Phase 0</p><h3>Project setup</h3></div><span class="status complete">Complete</span></div><p>Repository, build tooling, and CI scaffolding.</p><p class="meta">Tag: <code>v0.1.0</code></p><p class="confirmation"><strong>Gate:</strong> CI runs lint, typecheck, and tests on every push.</p><ul><li>GitHub Actions workflow green on main</li><li>README quick start verified on a clean checkout</li></ul></li><li class="phase complete"><div class="phase-heading"><div><p class="eyebrow">Phase 1</p><h3>Local note editor</h3></div><span class="status complete">Complete</span></div><p>Create, edit, and delete notes stored on-device with full offline support.</p><p class="meta">Tag: <code>v0.2.0</code></p><p class="meta">2 / 2 items complete</p><p class="confirmation"><strong>Gate:</strong> Manual test plan covering create/edit/delete/reorder all pass with the network disabled.</p><ul><li>Offline test plan run on 2026-07-30, 14/14 steps pass</li></ul><ol class="items"><li class="item complete"><div><span class="item-id">editor-core</span><h4>Rich text editor core</h4></div><span class="status complete">Complete</span><p>Bold/italic/lists/checkboxes backed by a local CRDT document.</p></li><li class="item complete"><div><span class="item-id">local-persistence</span><h4>Local persistence layer</h4></div><span class="status complete">Complete</span><p>Notes survive app restart via IndexedDB, migrated automatically from the v1 schema.</p></li></ol></li><li class="phase in_progress"><div class="phase-heading"><div><p class="eyebrow">Phase 2</p><h3>Multi-device sync</h3></div><span class="status in_progress">In Progress</span></div><p>Notes edited on one device appear on another, with conflicts resolved automatically where possible.</p><p class="meta">1 / 3 items complete</p><p class="confirmation"><strong>Gate:</strong> Two devices editing the same note offline both converge to the same content within 5 seconds of reconnecting, with no data loss for non-conflicting edits.</p><ul><li>Sync transport (WebSocket + REST fallback) passes its integration test suite</li></ul><ol class="items"><li class="item complete"><div><span class="item-id">sync-transport</span><h4>Sync transport layer</h4></div><span class="status complete">Complete</span><p>Push/pull note changes over WebSocket with a polling fallback when the socket is unavailable.</p></li><li class="item in_progress"><div><span class="item-id">conflict-resolution</span><h4>Conflict resolution</h4></div><span class="status in_progress">In Progress</span><p>Last-write-wins for plain text; a structural merge for checklists is still being designed.</p></li><li class="item planned"><div><span class="item-id">sync-status-ui</span><h4>Sync status indicator</h4></div><span class="status planned">Planned</span><p>Per-note badge showing synced / syncing / offline / conflict states.</p></li></ol></li><li class="phase planned"><div class="phase-heading"><div><p class="eyebrow">Phase 3</p><h3>Sharing and collaboration</h3></div><span class="status planned">Planned</span></div><p>Share a note with another account, with read-only and edit permission levels.</p><p class="meta">0 / 2 items complete</p><p class="confirmation"><strong>Gate:</strong> A shared note edited by a collaborator shows the edit to the owner without a manual refresh.</p><ol class="items"><li class="item planned"><div><span class="item-id">share-links</span><h4>Shareable links</h4></div><span class="status planned">Planned</span><p>Generate a link that grants read-only or edit access to a single note.</p></li><li class="item planned"><div><span class="item-id">presence</span><h4>Live presence</h4></div><span class="status planned">Planned</span><p>Show which collaborators currently have a shared note open.</p></li></ol></li></ol>
+    </section>
+    <footer>Generated from <code>examples/status.json</code> on record date 2026-08-15. Run this script again after editing the source; pass <code>--check</code> in CI to reject a stale output file.</footer>
+  </main>
+</body>
+</html>

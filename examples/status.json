@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-08-15",
+  "project": {
+    "name": "Nimbus Notes"
+  },
+  "current": {
+    "headline": "Sync engine in progress",
+    "summary": "Offline editing works locally; the conflict-resolution pass for multi-device sync is the current focus.",
+    "nextAction": "Land last-write-wins merge for plain-text notes, then design the richer merge strategy for checklists.",
+    "phase": 2
+  },
+  "phases": [
+    {
+      "number": 0,
+      "title": "Project setup",
+      "summary": "Repository, build tooling, and CI scaffolding.",
+      "state": "complete",
+      "confirmation": "CI runs lint, typecheck, and tests on every push.",
+      "tag": "v0.1.0",
+      "evidence": [
+        "GitHub Actions workflow green on main",
+        "README quick start verified on a clean checkout"
+      ]
+    },
+    {
+      "number": 1,
+      "title": "Local note editor",
+      "summary": "Create, edit, and delete notes stored on-device with full offline support.",
+      "state": "complete",
+      "confirmation": "Manual test plan covering create/edit/delete/reorder all pass with the network disabled.",
+      "tag": "v0.2.0",
+      "evidence": [
+        "Offline test plan run on 2026-07-30, 14/14 steps pass"
+      ],
+      "items": [
+        {
+          "id": "editor-core",
+          "title": "Rich text editor core",
+          "summary": "Bold/italic/lists/checkboxes backed by a local CRDT document.",
+          "state": "complete"
+        },
+        {
+          "id": "local-persistence",
+          "title": "Local persistence layer",
+          "summary": "Notes survive app restart via IndexedDB, migrated automatically from the v1 schema.",
+          "state": "complete"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Multi-device sync",
+      "summary": "Notes edited on one device appear on another, with conflicts resolved automatically where possible.",
+      "state": "in_progress",
+      "confirmation": "Two devices editing the same note offline both converge to the same content within 5 seconds of reconnecting, with no data loss for non-conflicting edits.",
+      "evidence": [
+        "Sync transport (WebSocket + REST fallback) passes its integration test suite"
+      ],
+      "items": [
+        {
+          "id": "sync-transport",
+          "title": "Sync transport layer",
+          "summary": "Push/pull note changes over WebSocket with a polling fallback when the socket is unavailable.",
+          "state": "complete"
+        },
+        {
+          "id": "conflict-resolution",
+          "title": "Conflict resolution",
+          "summary": "Last-write-wins for plain text; a structural merge for checklists is still being designed.",
+          "state": "in_progress"
+        },
+        {
+          "id": "sync-status-ui",
+          "title": "Sync status indicator",
+          "summary": "Per-note badge showing synced / syncing / offline / conflict states.",
+          "state": "planned"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Sharing and collaboration",
+      "summary": "Share a note with another account, with read-only and edit permission levels.",
+      "state": "planned",
+      "confirmation": "A shared note edited by a collaborator shows the edit to the owner without a manual refresh.",
+      "items": [
+        {
+          "id": "share-links",
+          "title": "Shareable links",
+          "summary": "Generate a link that grants read-only or edit access to a single note.",
+          "state": "planned"
+        },
+        {
+          "id": "presence",
+          "title": "Live presence",
+          "summary": "Show which collaborators currently have a shared note open.",
+          "state": "planned"
+        }
+      ]
+    }
+  ]
+}
