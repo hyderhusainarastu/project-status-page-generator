@@ -94,7 +94,38 @@ Example GitHub Actions step:
 - run: node generate-status-page.mjs --input status.json --output status.html --check
 ```
 
+A complete workflow you can copy is in [`docs/status-check.yml`](./docs/status-check.yml).
+Exit codes: `0` success or up to date, `1` invalid input or stale page, `2` usage error.
+Run `node generate-status-page.mjs --help` for the options.
+
+## Screenshot
+
+The page generated from [`examples/status.json`](./examples/status.json):
+
+![Generated status page for the example project](./docs/screenshot.png)
+
+## Install as a command (optional)
+
+The script has no dependencies, so copying `generate-status-page.mjs` is enough. A
+`package.json` with a `bin` entry is included if you prefer a command name:
+
+```sh
+npm install -g github:hyderhusainarastu/project-status-page-generator
+project-status-page --help
+```
+
+## Use from an AI coding agent
+
+[`AGENTS.md`](./AGENTS.md) is the call contract. Codex, Cursor, Gemini CLI, GitHub Copilot and
+Claude Code read it (Claude Code and Gemini CLI through the small `CLAUDE.md` and `GEMINI.md`
+pointers; Copilot through `.github/copilot-instructions.md`). The rule it gives an agent: update
+`status.json`, regenerate the page, and never hand-edit the HTML. CI `--check` enforces the
+regeneration. Pasting `AGENTS.md` into ChatGPT or another chat assistant works the same way.
+
 ## JSON shape
+
+The machine-readable version is [`status.schema.json`](./status.schema.json) (JSON Schema).
+It cannot express the contiguous-numbering and `current.phase` rules; the script checks those.
 
 - `schemaVersion` — must be `1`.
 - `updated` — a date/string shown in the footer.
@@ -132,6 +163,24 @@ Example GitHub Actions step:
   different look, edit the `<style>` block in `generate-status-page.mjs`
   directly — there's no separate theming layer.
 
+## Tests
+
+```sh
+npm test
+```
+
+Runs offline with Node's built-in test runner.
+
+## Related
+
+- [palimnote-tools](https://github.com/hyderhusainarastu/palimnote-tools) — the catalog this tool belongs to.
+- [migration-ledger-preflight-gate](https://github.com/hyderhusainarastu/migration-ledger-preflight-gate) — another small CI-style gate for a repo.
+- [pnpm-monorepo-ci-template](https://github.com/hyderhusainarastu/pnpm-monorepo-ci-template) — a GitHub Actions workflow template.
+
+Keywords: project status page, static site generator, roadmap, JSON to HTML, CI staleness check, GitHub Pages.
+
 ## License
 
 MIT — see [LICENSE](./LICENSE).
+
+Part of palimnote-tools - more at https://github.com/hyderhusainarastu

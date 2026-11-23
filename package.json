@@ -1,0 +1,26 @@
+{
+  "name": "project-status-page-generator",
+  "version": "1.0.0",
+  "description": "Dependency-free Node script that renders a phases-and-status JSON file to a static HTML status page, with a --check mode for CI.",
+  "type": "module",
+  "bin": {
+    "project-status-page": "generate-status-page.mjs"
+  },
+  "files": [
+    "generate-status-page.mjs",
+    "status.schema.json",
+    "examples"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": ["status-page", "static-site-generator", "json", "cli", "ci", "roadmap"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyderhusainarastu/project-status-page-generator.git"
+  }
+}

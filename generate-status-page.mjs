@@ -5,7 +5,7 @@
 // HTML doesn't match what the current JSON would produce.
 //
 // Usage:
-//   node generate-status-page.mjs [--input status.json] [--output status.html] [--check]
+//   node generate-status-page.mjs [--input status.json] [--output status.html] [--check] [--help]
 //
 // See examples/status.json for the input shape and examples/status.html
 // for the page it produces.
@@ -160,26 +160,46 @@ function render(status, sourceLabel) {
 `;
 }
 
+const usage = `Usage: project-status-page [--input status.json] [--output status.html] [--check] [--help]
+
+Render a phases-and-status JSON file to a static HTML page.
+
+Options:
+  --input <file>   Source JSON (default: status.json). Shape: status.schema.json
+  --output <file>  Generated HTML page (default: status.html)
+  --check          Write nothing; exit 1 if --output differs from a fresh render
+  -h, --help       Show this help and exit
+
+Exit codes: 0 success or up to date, 1 invalid input or stale page, 2 usage error.`;
+
+class UsageError extends Error {}
+
 function parseArgs(argv) {
-  const options = { input: "status.json", output: "status.html", check: false };
+  const options = { input: "status.json", output: "status.html", check: false, help: false };
   for (let i = 0; i < argv.length; i++) {
     const argument = argv[i];
-    if (argument === "--check") {
+    if (argument === "--help" || argument === "-h") {
+      options.help = true;
+    } else if (argument === "--check") {
       options.check = true;
     } else if (argument === "--input") {
       options.input = argv[++i];
     } else if (argument === "--output") {
       options.output = argv[++i];
     } else {
-      throw new Error(`Unknown argument: ${argument}\nUsage: node generate-status-page.mjs [--input status.json] [--output status.html] [--check]`);
+      throw new UsageError(`Unknown argument: ${argument}\n${usage}`);
     }
   }
-  if (!options.input || !options.output) throw new Error("--input and --output require a value");
+  if (!options.input || !options.output) throw new UsageError(`--input and --output require a value\n${usage}`);
   return options;
 }
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
+  if (options.help) {
+    console.log(usage);
+    return;
+  }
   const status = JSON.parse(await readFile(options.input, "utf8"));
   validate(status);
   const output = render(status, options.input);
@@ -198,5 +218,5 @@ async function main() {
 
 main().catch((error) => {
   console.error(error.message);
-  process.exitCode = 1;
+  process.exitCode = error instanceof UsageError ? 2 : 1;
 });

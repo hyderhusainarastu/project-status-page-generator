@@ -1,0 +1,15 @@
+# Copy to .github/workflows/status-check.yml in your project.
+# Fails the build when status.html no longer matches status.json.
+name: status-page
+on:
+  push:
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node generate-status-page.mjs --input status.json --output status.html --check
